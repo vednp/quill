@@ -17,7 +17,23 @@ import { Button } from './ui/button'
 import { useState } from 'react'
 
 const Dashboard = () => {
+  const utils = trpc.useContext()
 const {data: files, isLoading} = trpc.getUserFiles.useQuery()
+const{mutate: deleteFile} = trpc.deleteFile.useMutation({
+  onSuccess: () => {
+    utils.getUserFiles.invalidate()
+  },
+  onMutate({ id }) {
+    setCurrentlyDeletingFile(id)
+  },
+  onSettled() {
+    setCurrentlyDeletingFile(null)
+  },
+})
+
+const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<string | null>(null)
+
+
   return (
     <main className='mx-auto max-w-7xl md:p-10'>
       <div className='mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0'>
@@ -70,6 +86,9 @@ const {data: files, isLoading} = trpc.getUserFiles.useQuery()
                     mocked
                   </div>
 
+                      <Button size={'sm'} variant={'destructive'} className='w-full'>
+                        <Trash className='h-4 w-4'/>
+                      </Button>
                   
                 </div>
               </li>
