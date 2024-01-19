@@ -4,8 +4,11 @@ import "./globals.css";
 import { cn } from "../lib/utils"; 
 import Nav from "@/src/components/Nav";
 import Providers from "@/src/components/Providers";
+import { Toaster } from "../components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
+import 'react-loading-skeleton/dist/skeleton.css'
+import "simplebar-react/dist/simplebar.min.css"
 
 export const metadata: Metadata = {
   title: "Quill",
@@ -26,6 +29,7 @@ export default function RootLayout({
           inter.className
         )}
       >
+        <Toaster/>
         <Nav/>
         {children}
       </body>

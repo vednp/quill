@@ -86,9 +86,19 @@ const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<string | null
                     mocked
                   </div>
 
-                      <Button size={'sm'} variant={'destructive'} className='w-full'>
-                        <Trash className='h-4 w-4'/>
-                      </Button>
+                  <Button
+                    onClick={() =>
+                      deleteFile({ id: file.id })
+                    }
+                    size='sm'
+                    className='w-full'
+                    variant='destructive'>
+                    {currentlyDeletingFile === file.id ? (
+                      <Loader2 className='h-4 w-4 animate-spin' />
+                    ) : (
+                      <Trash className='h-4 w-4' />
+                    )}
+                  </Button>
                   
                 </div>
               </li>
